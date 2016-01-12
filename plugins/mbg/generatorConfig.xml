@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+ 	<classPathEntry location="D:\Workspaces\myeclipse2014\shop\plugins\mbg\mysql-connector-java-5.0.8.jar" />
+ 	
+ 	<context id="MySQLTables" targetRuntime="MyBatis3" >
+ 		<!-- 分页插件  -->
+ 		<plugin type="org.mybatis.generator.plugins.MysqlPaginationPlugin"/>
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+ 	
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://192.168.0.12:3306/jshop" 
+				userId="shop" password="shop123456" />
+				
+		<javaModelGenerator targetPackage="net.jeeshop.core.model" targetProject="shop" >
+			<property name="rootClass" value="net.jeeshop.core.model.base.BaseModel"/>
+		</javaModelGenerator>
+		
+		<sqlMapGenerator targetPackage="net.jeeshop.dao.impl.mybatis.mapping" targetProject="shop/src/main/resources" />
+		
+		<javaClientGenerator targetPackage="net.jeeshop.dao.impl.mybatis.mapper" targetProject="shop" type="XMLMAPPER" >
+			<property name="rootInterface" value="net.jeeshop.dao.impl.mybatis.mapper.BaseMapper"/>
+		</javaClientGenerator>
+		
+		<table schema="" tableName="t_cart_item" domainObjectName="CartItem">
+			<generatedKey column="id" sqlStatement="SELECT LAST_INSERT_ID()" identity="true" />
+		</table>
+	</context>
+</generatorConfiguration>

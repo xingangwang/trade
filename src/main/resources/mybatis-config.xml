@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration 
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    
+<!--     <typeHandlers>
+     	<typeHandler javaType="java.lang.Boolean" 
+     		handler="net.jeeshop.core.framework.mybatis.typehandler.BooleanHandler"/>
+     		
+    </typeHandlers>  -->
+    
+    <plugins>
+        <plugin interceptor="net.jeeshop.core.framework.mybatis.interceptor.LowerCaseSqlInterceptor"></plugin>
+    </plugins>
+</configuration> 
+
+

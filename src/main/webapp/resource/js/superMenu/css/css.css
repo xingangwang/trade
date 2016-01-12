@@ -1,0 +1,101 @@
+/*----------  左侧分类  LLY  2015/0/08  ----------*/
+#sidebar {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid #b1191a;
+    border-top:0;
+    height: auto;
+    margin-left: 0;
+    margin-top:-10px;
+    padding: 0px 10px;
+    width:210px;
+	font-family:"微软雅黑";
+	float:left;
+}
+#sidebar h3 {
+    margin-bottom: 0;
+    margin-top: 0;
+    text-align: left;
+}
+#sidebar .sidelist {
+    position: relative;
+	/* background:url(../../../zhaowoba/images/left_nav.png) no-repeat right 18px; */
+	border-bottom:1px dashed #ccc;
+    z-index: 1;
+    padding: 12px 0px;
+}
+#sidebar .sidelist a {
+}
+#sidebar .sidelist span h3 {
+    font-size: 14px;
+    font-weight: normal;
+    height:28px;
+    line-height:22px;
+    position: relative;
+    vertical-align: middle;
+    z-index: 20;
+}
+#sidebar .sidelist span h3 a {
+    display: block;
+    font-size: 14px;
+    height: auto;
+    width: auto;
+	font-weight: bold;
+}
+#sidebar .i-list {
+	background:#FFF;
+    border: 1px solid #c30;
+	border-left:0;
+    display: none;
+    left:210px;
+    padding: 15px;
+    position: absolute;
+    text-align: left;
+    top:-1px;
+    width:460px;
+    z-index:1;
+}
+#sidebar .i-list ul li {
+    float: left;
+    line-height: 32px;
+    list-style: outside none none;
+    width:70px;
+}
+#sidebar .i-list ul li a {
+    color: #333;
+    font-size: 12px;
+    text-decoration: none;
+}
+#sidebar .i-list ul li a:hover {
+    color: red;
+    text-decoration: underline;
+}
+#sidebar .hover {
+	background:#fff url(../../../zhaowoba/images/left_nav.png) no-repeat 192px 16px;
+    border-bottom: 1px solid #e33a3d;
+    border-right: 0 none;
+    border-top: 1px solid #e33a3d;
+	margin:0;
+	margin-top:-1px;
+	padding:0 10px;
+	padding-bottom:12px;
+	padding-top:8px;
+    width:211px;
+}
+#sidebar .hotText {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#sidebar a.small{
+	font-size:12px;
+	cursor:pointer;
+	float:left;
+	padding-right: 15px;
+	margin-bottom:3px;
+}
+/*----------  左侧分类  end  LLY  2015/0/08  ----------*/

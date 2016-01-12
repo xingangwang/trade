@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_9" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+	<display-name>shop</display-name>
+	
+	<context-param> 
+		<param-name>webAppRootKey</param-name> 
+		<param-value>jeeshop.root</param-value> 
+	</context-param>
+	
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath*:spring/applicationContext.xml</param-value>
+	</context-param>
+	
+	<listener>  
+            <listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>  
+    </listener>  
+	
+	<listener>
+		<description>spring-framework listener</description>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	 
+	<listener id="RequestContextListener">
+        <description>获取request对象</description>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+	    
+	<listener>
+		<description>系统自定义Listener</description>
+		<listener-class>net.jeeshop.web.listener.SystemListener</listener-class>
+	</listener>
+	
+	<!-- cas 开始 -->
+	<listener>
+			<description>用于对创建的session打上标记</description>
+			<listener-class>net.jeeshop.web.filter.FirstContactListener</listener-class>
+	</listener>
+	<!-- 与CAS Single Sign Out Filter配合，注销登录信息  -->  
+    
+         
+    <!-- CAS Server 通知 CAS Client，删除session,注销登录信息  -->  
+    <filter>   
+            <filter-name>CAS Single Sign Out Filter</filter-name>  
+            <filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>  
+    </filter>   
+    <filter-mapping>  
+            <filter-name>CAS Single Sign Out Filter</filter-name>
+            <!-- 此处拦截所有地址即可 -->  
+            <url-pattern>/*</url-pattern>  
+    </filter-mapping>  
+    
+     <!-- 用于重定向首次请求到cas的认证地址 -->
+     <filter>
+     	<filter-name>CAS First Contact Login Check</filter-name>
+     	<filter-class>net.jeeshop.web.filter.FirstContactRedirectFilter</filter-class>
+     	<init-param>  
+            <param-name>CheckUrl</param-name>  
+            <!-- 配置CAS地址 -->
+            <param-value>http://cas.dev.taxhoo.com</param-value>  
+        </init-param>  
+     </filter>
+     
+     <!-- 登录认证，未登录用户导向CAS Server进行认证 -->  
+     <filter>   
+    	<filter-name>CAS Filter</filter-name>  
+   	 	<filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>  
+        <init-param>  
+            <param-name>casServerLoginUrl</param-name>  
+            <!-- 配置CAS登录地址 -->
+            <param-value>http://cas.dev.taxhoo.com/login</param-value>  
+        </init-param>  
+        <init-param>  
+            <param-name>serverName</param-name>
+            <!-- 配置jeeshop -->  
+            <param-value>http://shop.dev.taxhoo.com:82/</param-value>
+        </init-param>  
+    </filter>   
+    <!-- CAS Filter 此处配置拦截系统所需的URL-Mapping -->  
+    <filter-mapping>  
+            <filter-name>CAS Filter</filter-name>
+            <url-pattern>/cart/*</url-pattern>  
+            <url-pattern>/order/*</url-pattern>
+            <url-pattern>/account/*</url-pattern>
+    </filter-mapping>
+   
+    <!-- CAS Filter end -->  
+    
+    <!-- CAS Client向CAS Server进行ticket验证 -->  
+    <filter>    
+        <filter-name>CAS Validation Filter</filter-name>  
+        <filter-class>net.jeeshop.web.filter.CASFilter</filter-class>  
+        <init-param>  
+	            <param-name>casServerUrlPrefix</param-name>
+	            <!-- 配置cas前缀 -->  
+    	        <param-value>http://cas.dev.taxhoo.com</param-value>  
+        </init-param>  
+        <init-param>  
+                <param-name>serverName</param-name>
+                <!-- 配置当前服务地址 -->  
+                <param-value>http://shop.dev.taxhoo.com:82</param-value>  
+        </init-param>
+        <init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>  
+    </filter>  
+    <filter-mapping>  
+         <filter-name>CAS Validation Filter</filter-name>
+         <url-pattern>/*</url-pattern>  
+    </filter-mapping>  
+          
+   
+	<!-- cas 结束 -->
+	
+	<filter>
+       <filter-name>UrlRewriteFilter</filter-name>
+       <filter-class>
+              org.tuckey.web.filters.urlrewrite.UrlRewriteFilter
+       </filter-class>
+       <init-param>
+              <param-name>logLevel</param-name>
+              <param-value>slf4j</param-value>
+       </init-param>
+	</filter>
+	
+ 	<filter>
+ 		<filter-name>EncodeFilter</filter-name>
+ 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+ 	</filter>
+ 	
+ 	<filter-mapping>
+		<filter-name>EncodeFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+ 	
+ 	<filter-mapping>
+	       <filter-name>UrlRewriteFilter</filter-name>
+	       <url-pattern>/*</url-pattern>
+	</filter-mapping>
+ 	
+	<servlet>    
+     	<servlet-name>Uploadify</servlet-name>    
+     	<servlet-class>net.jeeshop.web.servlet.Uploadify</servlet-class>    
+    </servlet>    
+    
+    <servlet-mapping>    
+     	<servlet-name>Uploadify</servlet-name>    
+     	<url-pattern>/uploadify.do</url-pattern>    
+    </servlet-mapping>
+    
+	<servlet>
+		<servlet-name>ValidateImage</servlet-name>
+		<servlet-class>net.jeeshop.web.servlet.ValidateImage</servlet-class>
+	</servlet>
+	
+	<servlet-mapping>
+		<servlet-name>ValidateImage</servlet-name>
+		<url-pattern>/ValidateImage.do</url-pattern>
+	</servlet-mapping>
+	
+    <servlet>
+        <description>spring mvc servlet</description>
+        <servlet-name>springMvc</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <description>spring mvc 配置文件</description>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath*:spring/spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    
+    <servlet-mapping>
+        <servlet-name>springMvc</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    
+	<error-page>
+		<error-code>404</error-code>
+		<location>/404.jsp</location>
+	</error-page>
+	
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error.jsp</location>
+	</error-page>
+	
+	<session-config>
+	<!-- TODO:该值待进一步确认 -->
+		<session-timeout>180</session-timeout>
+	</session-config>
+	
+	<welcome-file-list>
+		<welcome-file>/index.jsp</welcome-file>
+	</welcome-file-list>
+	
+	<jsp-config>
+	  <taglib>
+	    <taglib-uri>
+	      http://jsptags.com/tags/navigation/pager
+	    </taglib-uri>
+	    <taglib-location>
+	      /WEB-INF/jsp/pager-taglib.tld
+	    </taglib-location>
+	  </taglib>
+	</jsp-config>
+</web-app>
